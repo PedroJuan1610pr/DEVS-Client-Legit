@@ -1,0 +1,15 @@
+[Unit]
+Description=Devs Peer API tunnel URL → GitHub Gist
+After=devs-peer-tunnel.service
+Requires=devs-peer-tunnel.service
+
+[Service]
+Type=simple
+User=pedro
+WorkingDirectory=/opt/devs-peer-api
+ExecStart=/opt/devs-peer-api/watch-tunnel-peer.sh /opt/devs-peer-api/tunnel.log
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

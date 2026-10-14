@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "devs-client",
+  "version": "${version}",
+  "name": "Devs Client Legit",
+  "description": "Devs Client Legit for Minecraft 26.1.2 \u2014 QoL + peer cosmetics/tab icon on Fabric servers.",
+  "authors": [
+    "DEVS"
+  ],
+  "icon": "assets/devs/icon.png",
+  "environment": "*",
+  "mixins": [
+    "devs.mixins.json"
+  ],
+  "entrypoints": {
+    "main": [
+      "com.devs.client.DevsMain"
+    ],
+    "client": [
+      "com.devs.client.DevsClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.1.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

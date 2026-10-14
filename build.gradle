@@ -1,0 +1,64 @@
+plugins {
+    id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base { archivesName = project.archives_base_name }
+
+repositories {
+    maven {
+        name = "RelativityMC"
+        url = "https://repo.codemc.io/repository/relativitymc/"
+    }
+    maven { name = "Fabric"; url = "https://maven.fabricmc.net/" }
+    mavenCentral()
+}
+
+loom {
+    // Minecraft 26.1+ usa intermediate mappings de RelativityMC (Yarn ya no es oficial)
+    useIntermediateMappings = true
+    intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "org.relativitymc:modern-yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") { expand "version": project.version }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+    withSourcesJar()
+}
+
+jar {
+    from("LICENSE") { rename { "${it}_${project.archives_base_name}" } }
+}
+
+tasks.register("fixTimestamps") {
+    doLast {
+        def now = System.currentTimeMillis()
+        fileTree(dir: "src").visit { details ->
+            def f = details.file
+            if (f.exists()) {
+                try { f.setLastModified(now) } catch (Throwable ignored) {}
+            }
+        }
+    }
+}
+tasks.named("processResources").configure { dependsOn("fixTimestamps") }
+tasks.named("compileJava").configure { dependsOn("fixTimestamps") }

@@ -1,0 +1,18 @@
+[Unit]
+Description=Devs Peer API Cloudflare quick tunnel
+After=network-online.target devs-peer-api.service
+Wants=network-online.target
+Requires=devs-peer-api.service
+
+[Service]
+Type=simple
+User=pedro
+WorkingDirectory=/opt/devs-peer-api
+ExecStart=/usr/bin/cloudflared tunnel --url http://127.0.0.1:8787 --no-autoupdate
+Restart=always
+RestartSec=5
+StandardOutput=append:/opt/devs-peer-api/tunnel.log
+StandardError=append:/opt/devs-peer-api/tunnel.log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.devs.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "devs-client.refmap.json",
+  "client": [
+    "WorldRendererMixin",
+    "SimpleOptionMixin",
+    "WeatherMixin",
+    "AttackHookMixin",
+    "CameraMixin",
+    "FreecamLookMixin",
+    "TotemPopMixin",
+    "ChatHudMixin",
+    "InGameHudMixin",
+    "ClientPlayerInteractionManagerMixin",
+    "DisconnectedScreenMixin",
+    "HeldItemRendererMixin",
+    "NoRenderOverlayMixin",
+    "NoRenderHurtCamMixin",
+    "NoRenderBossBarMixin",
+    "NoRenderTotemMixin",
+    "EntityNameTagMixin",
+    "PlayerListHudMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
